@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Cucumber Test Suite" parallel="false">
+	<test name="Cucumber Test">
+		<classes>
+			<class name="id.alphait.automation.slumber.utils.TestFeatureRunner"/>
+		</classes>
+	</test> 	
+</suite>

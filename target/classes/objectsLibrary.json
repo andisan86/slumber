@@ -1,0 +1,45 @@
+{
+  "objects":
+          [
+            {
+              "objectName": "Google Home Logo",
+              "objectType": "div",
+              "objectId": "hplogo",
+              "objectNgModel": "",
+              "objectNgClick": "",
+              "objectNgIf": "",
+              "objectHref": "",
+              "objectNameAttr": ""
+            },
+            {
+              "objectName": "Google Home Search Box",
+              "objectType": "input",
+              "objectId": "lst-ib",
+              "objectNgModel": "",
+              "objectNgClick": "",
+              "objectNgIf": "",
+              "objectHref": "",
+              "objectNameAttr": ""
+            },
+            {
+              "objectName": "Google Home Google Search Button",
+              "objectType": "input",
+              "objectId": "",
+              "objectNgModel": "",
+              "objectNgClick": "",
+              "objectNgIf": "",
+              "objectHref": "",
+              "objectNameAttr": "btnK"
+            },
+            {
+              "objectName": "Google Home I'm Feeling Lucky Button",
+              "objectType": "input",
+              "objectId": "",
+              "objectNgModel": "",
+              "objectNgClick": "",
+              "objectNgIf": "",
+              "objectHref": "",
+              "objectNameAttr": "btnI"
+            }
+          ]
+}

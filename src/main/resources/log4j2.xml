@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration>
+    <Appenders>
+        <RollingFile name="fileLogger" filename="${sys:user.dir}/logs/logs.html" filePattern="${sys:user.dir}/logs/app-info-%d{dd-MM-yyyy}.html">
+            <HTMLLayout charset="UTF-8" title="Logs" locationInfo="true" />
+            <Policies>
+                <OnStartupTriggeringPolicy />
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="5 MB" />
+            </Policies>
+        </RollingFile>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%-5level] %d{dd-MM-yyyy HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="org.automationtest.slumber" level="debug" additivity="true">
+            <appender-ref ref="fileLogger" level="debug" />
+            <appender-ref ref="console" level="debug" />
+        </Logger>
+        <Root level="debug" additivity="true">
+            <appender-ref ref="console" />
+        </Root>
+    </Loggers>
+</Configuration>

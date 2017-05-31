@@ -3,6 +3,7 @@ package id.alphait.automation.slumber.config;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.CapabilityType;
@@ -30,6 +31,9 @@ public class InitDriver {
         FIREFOX {
             public DesiredCapabilities getDesiredCapabilities() {
                 DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments(Arrays.asList("--start-maximized"));
+                capabilities.setCapability(ChromeOptions.CAPABILITY, options);
                 capabilities.setCapability("takesScreenshot", true);
                 return capabilities;
             }
@@ -43,6 +47,9 @@ public class InitDriver {
                 DesiredCapabilities capabilities = DesiredCapabilities.chrome();
                 capabilities.setCapability("chrome.switches", Arrays.asList("--no-default-browser-check"));
                 HashMap<String, String> chromePreferences = new HashMap<String, String>();
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments(Arrays.asList("--start-maximized"));
+                capabilities.setCapability(ChromeOptions.CAPABILITY, options);
                 chromePreferences.put("profile.password_manager_enabled", "false");
                 capabilities.setCapability("chrome.prefs", chromePreferences);
                 capabilities.setCapability("takesScreenshot", true);
@@ -56,6 +63,9 @@ public class InitDriver {
         IE {
             public DesiredCapabilities getDesiredCapabilities() {
                 DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments(Arrays.asList("--start-maximized"));
+                capabilities.setCapability(ChromeOptions.CAPABILITY, options);
                 capabilities.setCapability(CapabilityType.ForSeleniumServer.ENSURING_CLEAN_SESSION, true);
                 capabilities.setCapability("requireWindowsFocus", true);
                 capabilities.setCapability("takesScreenshot", true);

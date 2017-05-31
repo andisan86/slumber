@@ -58,9 +58,9 @@ public class TestFeatureRunner {
 	 */
 	@BeforeSuite
 	public void beforeSuite() {
-		System.setProperty("mode", "test");
-		System.setProperty("browser", "CHROME");
-		System.setProperty("driverLocation", "drivers/chromedriver.exe");
+		//System.setProperty("mode", "test");
+		//System.setProperty("browser", "CHROME");
+		//System.setProperty("driverLocation", "drivers/chromedriver.exe");
 		extent = ExtentManager.createInstance();
 		initDriver = new InitDriver();
         webDriver = initDriver.getDriver();

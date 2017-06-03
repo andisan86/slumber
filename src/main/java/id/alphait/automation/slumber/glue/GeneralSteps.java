@@ -70,6 +70,9 @@ public class GeneralSteps {
         browser.closeBrowser();
     }
     
+    /**
+     * This method is used to get actions, drivers and logs objects created when starting test
+     */
     private void setParameters() {
     	String currentThread = Long.toString(Thread.currentThread().getId());
 		DefaultPicoContainer pico = new DefaultPicoContainer(new AnnotatedFieldInjection());

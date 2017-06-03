@@ -3,7 +3,7 @@ package id.alphait.automation.slumber.glue;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import id.alphait.automation.slumber.reporting.LogManager;
-import id.alphait.automation.slumber.utils.FeatureRunner;
+import id.alphait.automation.slumber.runners.FeatureRunner;
 import id.alphait.automation.slumber.web.Actions;
 import id.alphait.automation.slumber.web.Browser;
 import org.openqa.selenium.WebDriver;

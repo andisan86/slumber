@@ -47,6 +47,10 @@ public class FeatureRunner {
     private Actions actions;
     private LogManager log;
 
+    public FeatureRunner() {
+    	
+    }
+    
     /**
      * Finish ExtentReport
      */

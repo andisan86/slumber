@@ -60,7 +60,7 @@ public class FeatureRunner {
 	 */
 	@BeforeSuite
 	public void beforeSuite() {
-		System.setProperty("mode", "prod");
+		//System.setProperty("mode", "prod");
 		extent = ExtentManager.createInstance();
 		initDriver = new InitDriver();
         webDriver = initDriver.getDriver();

@@ -1,4 +1,4 @@
-package id.alphait.automation.slumber.utils;
+package id.alphait.automation.slumber.runners;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.testng.CucumberFeatureWrapper;
@@ -47,6 +47,10 @@ public class FeatureRunner {
     private Actions actions;
     private LogManager log;
 
+    public FeatureRunner() {
+    	
+    }
+    
     /**
      * Finish ExtentReport
      */
@@ -60,7 +64,7 @@ public class FeatureRunner {
 	 */
 	@BeforeSuite
 	public void beforeSuite() {
-		System.setProperty("mode", "prod");
+		//System.setProperty("mode", "prod");
 		extent = ExtentManager.createInstance();
 		initDriver = new InitDriver();
         webDriver = initDriver.getDriver();

@@ -221,9 +221,11 @@
           				<suiteXmlFiles>
 							<suiteXmlFile>src/test/resources/TestNG.xml</suiteXmlFile>
 						</suiteXmlFiles>
-						<!-- 
 						<systemPropertyVariables>
-							<testBrowser>${testBrowser}</testBrowser>
+							<mode>test</mode>
+							<browser>CHROME</browser>
+							<driverLocation>drivers/chromedriver.exe</driverLocation>
+							<!-- 
 							<testUrl>${testUrl}</testUrl>
 							<testBrowserExecLocation>${testBrowserExecLocation}</testBrowserExecLocation>
 							<testRemotely>${testRemotely}</testRemotely>
@@ -231,8 +233,8 @@
 							<testRemoteHubUrl>${testRemoteHubUrl}</testRemoteHubUrl>
 							<testUsername>${testUsername}</testUsername>
 							<testPassword>${testPassword}</testPassword>
+							-->
 						</systemPropertyVariables>
-						-->
         			</configuration>
       			</plugin>
       			<!-- compiler -->
@@ -274,7 +276,7 @@
 						</descriptorRefs>
 						<archive>
           					<manifest>
-            					<mainClass>id.alphait.automation.utils.RunSlumber</mainClass>
+            					<mainClass>id.alphait.automation.slumber.utils.RunSlumber</mainClass>
           					</manifest>
         				</archive>
         				<appendAssemblyId>false</appendAssemblyId>
@@ -296,7 +298,7 @@
       			</plugin>
 			</plugins>
 		</pluginManagement>
-	</build>
+		</build>
 	<reporting>
 	<plugins>
               <!-- create a site which hosts all information from this project (for dev purpose). to invoke use mvn site -->

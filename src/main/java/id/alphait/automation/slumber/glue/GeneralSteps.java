@@ -3,8 +3,7 @@ package id.alphait.automation.slumber.glue;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import id.alphait.automation.slumber.reporting.LogManager;
-import id.alphait.automation.slumber.utils.FeatureRunner;
-import id.alphait.automation.slumber.utils.TestFeatureRunner;
+import id.alphait.automation.slumber.runners.FeatureRunner;
 import id.alphait.automation.slumber.web.Actions;
 import id.alphait.automation.slumber.web.Browser;
 import org.openqa.selenium.WebDriver;
@@ -71,14 +70,15 @@ public class GeneralSteps {
         browser.closeBrowser();
     }
     
+    /**
+     * This method is used to get actions, drivers and logs objects created when starting test
+     */
     private void setParameters() {
     	String currentThread = Long.toString(Thread.currentThread().getId());
 		DefaultPicoContainer pico = new DefaultPicoContainer(new AnnotatedFieldInjection());
 		pico.addComponent(FeatureRunner.class);
-		pico.addComponent(TestFeatureRunner.class);
 		List<Map<String, Object>> params = new ArrayList<Map<String, Object>>();
 		params.add(pico.getComponent(FeatureRunner.class).getParamsMap());
-		params.add(pico.getComponent(TestFeatureRunner.class).getParamsMap());
 		for (Map<String, Object> param : params) {
 			if (param.containsKey(currentThread)) {
 				actions = (Actions) param.get(currentThread + "Actions");

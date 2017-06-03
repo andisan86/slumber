@@ -1,4 +1,4 @@
-package id.alphait.automation.slumber.utils;
+package id.alphait.automation.slumber.runners;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.testng.CucumberFeatureWrapper;

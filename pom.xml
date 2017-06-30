@@ -11,7 +11,20 @@
   <url>http://maven.apache.org</url>
 
   <properties>
+	<mode>test</mode>
+	<browser>CHROME</browser>
+	<driverLocation>drivers/chromedriver.exe</driverLocation>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <cucumber.glue>id.alphait.automation.slumber.glue</cucumber.glue>
+    <cucumberOutputDir>target/cucumber-parallel</cucumberOutputDir>
+    <customVmTemplate>src/main/resources/cucumber-runner-template.vm</customVmTemplate>
+    <featuresDir>src/test/resources/features/</featuresDir>
+    <namingScheme>simple</namingScheme>
+    <namingPattern>Parallel{c}IT</namingPattern>
+    <parallelScheme>SCENARIO</parallelScheme>
+    <outputDir>${project.build.directory}/generated-test-sources/cucumber</outputDir>
+    <packageName>id.alphait.automation.slumber.runners</packageName>
+    <useTestNG>true</useTestNG>
   </properties>
 
   	<dependencies>
@@ -222,9 +235,9 @@
 							<suiteXmlFile>src/test/resources/TestNG.xml</suiteXmlFile>
 						</suiteXmlFiles>
 						<systemPropertyVariables>
-							<mode>test</mode>
-							<browser>CHROME</browser>
-							<driverLocation>drivers/chromedriver.exe</driverLocation>
+							<mode>${mode}</mode>
+							<browser>${browser}</browser>
+							<driverLocation>${driverLocation}</driverLocation>
 							<!-- 
 							<testUrl>${testUrl}</testUrl>
 							<testBrowserExecLocation>${testBrowserExecLocation}</testBrowserExecLocation>
@@ -296,6 +309,37 @@
         			<artifactId>maven-javadoc-plugin</artifactId>
         			<version>2.10.4</version>
       			</plugin>
+      			<plugin>
+				  <groupId>com.github.temyers</groupId>
+				  <artifactId>cucumber-jvm-parallel-plugin</artifactId>
+				  <version>4.1.0</version>
+				  <executions>
+				    <execution>
+				      <id>generateRunners</id>
+				      <phase>generate-test-sources</phase>
+				      <goals>
+				        <goal>generateRunners</goal>
+				      </goals>
+				      <configuration>
+				        <glue>${cucumber.glue}</glue>
+				        <outputDirectory>${outputDir}</outputDirectory>
+				        <featuresDirectory>${featuresDir}</featuresDirectory>
+				        <cucumberOutputDir>${cucumberOutputDir}</cucumberOutputDir>
+				        <plugins>
+				          <plugin>
+				              <name>json</name>
+				          </plugin>
+				        </plugins> 
+				        <useTestNG>${useTestNG}</useTestNG> 
+				        <namingScheme>${namingScheme}</namingScheme>
+				        <namingPattern>${namingPattern}</namingPattern>
+				        <parallelScheme>${parallelScheme}</parallelScheme>
+				        <customVmTemplate>${customVmTemplate}</customVmTemplate>
+				        <packageName>${packageName}</packageName>
+				      </configuration>
+				    </execution>
+				  </executions>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		</build>

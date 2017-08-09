@@ -1,9 +1,10 @@
-package id.alphait.automation.slumber.web;
+package com.thetestguys.slumber.web;
 
-import id.alphait.automation.slumber.reporting.LogManager;
-import id.alphait.automation.slumber.utils.PropertyFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+
+import com.thetestguys.slumber.reporting.LogManager;
+import com.thetestguys.slumber.utils.PropertyFactory;
 
 /**
  * This class handles Browser related actions

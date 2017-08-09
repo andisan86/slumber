@@ -1,4 +1,4 @@
-package id.alphait.automation.slumber.reporting;
+package com.thetestguys.slumber.reporting;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -9,7 +9,8 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
-import id.alphait.automation.slumber.utils.PropertyFactory;
+
+import com.thetestguys.slumber.utils.PropertyFactory;
 
 /**
  * This class describes console logging functionality

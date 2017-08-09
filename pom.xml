@@ -136,8 +136,13 @@
      	<dependency>
     		<groupId>com.aventstack</groupId>
     		<artifactId>extentreports</artifactId>
-    		<version>3.0.5</version>
+    		<version>3.0.6</version>
     	</dependency>
+    	<dependency>
+    		<groupId>com.vimalselvam</groupId>
+    		<artifactId>cucumber-extentsreport</artifactId>
+    		<version>3.0.1</version>
+		</dependency>
     	<dependency>
     		<groupId>javax.enterprise</groupId>
     		<artifactId>cdi-api</artifactId>
@@ -146,7 +151,7 @@
     	<dependency>
     		<groupId>javax.inject</groupId>
     		<artifactId>javax.inject</artifactId>
-    		<version>1.0.0.redhat-6</version>
+    		<version>1</version>
     	</dependency>
     	<dependency>
     		<groupId>info.cukes</groupId>

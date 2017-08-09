@@ -1,29 +1,23 @@
-package id.alphait.automation.slumber.runners;
+package com.thetestguys.slumber.runners;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.testng.CucumberFeatureWrapper;
 import cucumber.api.testng.TestNGCucumberRunner;
-import id.alphait.automation.slumber.config.InitDriver;
-import id.alphait.automation.slumber.reporting.ExtentManager;
-import id.alphait.automation.slumber.reporting.LogManager;
-import id.alphait.automation.slumber.web.Actions;
-import id.alphait.automation.slumber.web.Browser;
-import id.alphait.automation.slumber.web.WebObjects;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
+import com.cucumber.listener.ExtentProperties;
+import com.thetestguys.slumber.config.InitDriver;
+import com.thetestguys.slumber.reporting.LogManager;
+import com.thetestguys.slumber.web.Actions;
+import com.thetestguys.slumber.web.WebObjects;
 
 /**
  * This class runs the features using TestNG
@@ -34,13 +28,12 @@ import com.aventstack.extentreports.ExtentTest;
 @CucumberOptions(
         features = "src/test/resources/features"
         , glue = "id.alphait.automation.slumber.glue"
+        , plugin = {"com.cucumber.listener.ExtentCucumberFormatter:"}
 )
 public class FeatureRunner {
 	private TestNGCucumberRunner testNGCucumberRunner;
-	private static ExtentTest extentTest;
 	private static String keyID;
-	private static Map<String, Object> paramsMap = new HashMap<String, Object>();
-	private static ExtentReports extent;
+	private static Map<String, Object> paramsMap;
     private WebObjects webObjects;
     private InitDriver initDriver;
     private WebDriver webDriver;
@@ -50,14 +43,6 @@ public class FeatureRunner {
     public FeatureRunner() {
     	
     }
-    
-    /**
-     * Finish ExtentReport
-     */
-	@AfterSuite
-	public void afterSuite() {
-		ExtentManager.getInstance().flush();
-	}
 	
 	/**
 	 * Initiates reporting, actions, driver and web object
@@ -65,11 +50,12 @@ public class FeatureRunner {
 	@BeforeSuite
 	public void beforeSuite() {
 		//System.setProperty("mode", "prod");
-		extent = ExtentManager.createInstance();
 		initDriver = new InitDriver();
         webDriver = initDriver.getDriver();
         webObjects = new WebObjects(webDriver);
         actions = new Actions(webDriver, webObjects);
+		ExtentProperties extentProperties = ExtentProperties.INSTANCE;
+        extentProperties.setReportPath("./report.html");
 	}
 	
 	/**
@@ -78,6 +64,11 @@ public class FeatureRunner {
 	@BeforeClass
 	public void beforeClass() {
 		keyID = Long.toString(Thread.currentThread().getId());
+		log = new LogManager();
+		paramsMap = new HashMap<String, Object>();
+		paramsMap.put(keyID + "Actions", actions);
+		paramsMap.put(keyID + "Driver", webDriver);
+		paramsMap.put(keyID + "Log", log);
 	}
 
 	/**
@@ -87,13 +78,6 @@ public class FeatureRunner {
 	 */
     @Test(groups = "cucumber", description = "Runs Cucumber Feature", dataProvider = "features")
     public void feature(CucumberFeatureWrapper cucumberFeatureWrapper) {
-    	String scenarioName = cucumberFeatureWrapper.getCucumberFeature().getGherkinFeature().getName().trim();
-		extentTest = ExtentManager.createExtentTest(scenarioName);
-		log = new LogManager(extentTest.createNode(com.aventstack.extentreports.gherkin.model.Scenario.class, scenarioName));
-		paramsMap.put(keyID, extentTest);
-		paramsMap.put(keyID + "Actions", actions);
-		paramsMap.put(keyID + "Driver", webDriver);
-		paramsMap.put(keyID + "Log", log);
         testNGCucumberRunner.runCucumber(cucumberFeatureWrapper.getCucumberFeature());
     }
 

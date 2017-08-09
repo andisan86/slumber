@@ -1,4 +1,4 @@
-package id.alphait.automation.slumber.web;
+package com.thetestguys.slumber.web;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

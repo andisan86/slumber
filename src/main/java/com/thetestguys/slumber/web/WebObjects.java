@@ -1,11 +1,12 @@
-package id.alphait.automation.slumber.web;
+package com.thetestguys.slumber.web;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Table;
 import com.paulhammant.ngwebdriver.ByAngular;
-import id.alphait.automation.slumber.pojo.ObjectsPojo;
+import com.thetestguys.slumber.pojo.ObjectsPojo;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

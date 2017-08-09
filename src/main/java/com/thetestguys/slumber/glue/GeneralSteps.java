@@ -1,14 +1,17 @@
-package id.alphait.automation.slumber.glue;
+package com.thetestguys.slumber.glue;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
-import id.alphait.automation.slumber.reporting.LogManager;
-import id.alphait.automation.slumber.runners.FeatureRunner;
-import id.alphait.automation.slumber.web.Actions;
-import id.alphait.automation.slumber.web.Browser;
+
 import org.openqa.selenium.WebDriver;
 import org.picocontainer.DefaultPicoContainer;
 import org.picocontainer.injectors.AnnotatedFieldInjection;
+
+import com.thetestguys.slumber.reporting.LogManager;
+import com.thetestguys.slumber.runners.FeatureRunner;
+import com.thetestguys.slumber.web.Actions;
+import com.thetestguys.slumber.web.Browser;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +32,7 @@ public class GeneralSteps {
      * Constructor
      */
     public GeneralSteps() {
+    	System.out.println("Setting parameter");
     	setParameters();
     }
     
@@ -80,12 +84,9 @@ public class GeneralSteps {
 		List<Map<String, Object>> params = new ArrayList<Map<String, Object>>();
 		params.add(pico.getComponent(FeatureRunner.class).getParamsMap());
 		for (Map<String, Object> param : params) {
-			if (param.containsKey(currentThread)) {
-				actions = (Actions) param.get(currentThread + "Actions");
-				webDriver = (WebDriver) param.get(currentThread + "Driver");
-				log = (LogManager) param.get(currentThread + "Log");
-				break;
-			}
+			if (param.containsKey(currentThread + "Actions")) actions = (Actions) param.get(currentThread + "Actions");		
+			if (param.containsKey(currentThread + "Driver")) webDriver = (WebDriver) param.get(currentThread + "Driver");
+			if (param.containsKey(currentThread + "Log")) log = (LogManager) param.get(currentThread + "Log");
 		}
     }
 }

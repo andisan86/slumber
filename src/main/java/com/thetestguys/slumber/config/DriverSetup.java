@@ -1,4 +1,4 @@
-package id.alphait.automation.slumber.config;
+package com.thetestguys.slumber.config;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;

@@ -1,15 +1,15 @@
-package id.alphait.automation.slumber.reporting;
+package com.thetestguys.slumber.reporting;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import com.aventstack.extentreports.ExtentTest;
+import com.cucumber.listener.Reporter;
+import com.thetestguys.slumber.utils.PropertyFactory;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.gherkin.model.And;
 import com.aventstack.extentreports.gherkin.model.Given;
 import com.aventstack.extentreports.gherkin.model.Then;
 import com.aventstack.extentreports.gherkin.model.When;
-import id.alphait.automation.slumber.utils.PropertyFactory;
 
 /**
  * This class describes report logging functionality
@@ -19,15 +19,13 @@ import id.alphait.automation.slumber.utils.PropertyFactory;
  */
 public class LogManager {
 	private LogConsole log;
-	ExtentTest test;
 	
 	/**
 	 * Constructor 
 	 *
 	 * @param test ExtentTest
 	 */
-	public LogManager(ExtentTest test) {
-		this.test = test;
+	public LogManager() {
 		log = new LogConsole();
 	}
 	
@@ -38,23 +36,7 @@ public class LogManager {
 	 * @param item item
 	 */
 	public synchronized void logStepDef(String gherkinKeyword, String item) {
-		switch(gherkinKeyword.toUpperCase()) {
-		case "GIVEN":
-			test.createNode(Given.class, item).info("INFO");
-			break;
-		case "WHEN":
-			test.createNode(When.class, item).info("INFO");
-			break;
-		case "AND":
-			test.createNode(And.class, item).info("INFO");
-			break;
-		case "THEN":
-			test.createNode(Then.class, item).info("INFO");
-			break;
-		default:
-			test.createNode(When.class, item).info("INFO");
-			break;
-		}
+		Reporter.addStepLog(item);
 		log.logStep(item);
 		log.logDebug(item);
 	}
@@ -74,7 +56,7 @@ public class LogManager {
 	 * @param item item
 	 */
 	public synchronized void logPassAssertion(String item) {
-		test.createNode(Then.class, item).pass(item);
+		Reporter.addStepLog(item);
 		log.logAssertPass(item);
 		log.logDebug(item);
 	}
@@ -85,7 +67,7 @@ public class LogManager {
 	 * @param item item
 	 */
 	public synchronized void logWarning(String item) {
-		test.createNode(Then.class, item).warning(item);
+		Reporter.addStepLog(item);
 		log.logWarning(item);
 	}
 	
@@ -95,7 +77,7 @@ public class LogManager {
 	 * @param item item
 	 */
 	public synchronized void logInfo(String item) {
-		test.createNode(Then.class, item).info(item);
+		Reporter.addStepLog(item);
 		log.logDebug(item);
 	}
 	
@@ -107,7 +89,8 @@ public class LogManager {
 	 */
 	public synchronized void logFailAssertion(String item, String screenshotPath) {
 		try {
-			test.createNode(Then.class, item).fail(item, MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+			Reporter.addStepLog(item);
+			Reporter.addScreenCaptureFromPath(screenshotPath);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

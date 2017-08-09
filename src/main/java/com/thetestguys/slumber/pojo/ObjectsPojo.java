@@ -1,4 +1,4 @@
-package id.alphait.automation.slumber.pojo;
+package com.thetestguys.slumber.pojo;
 
 /**
  * This class describes POJO for web objects. Each web object is defined in objectsLibrary.json and described by its web element charateristics (ID, NGModel, NGClick, NGIf, Href, Name)

@@ -1,4 +1,4 @@
-package id.alphait.automation.slumber.utils;
+package com.thetestguys.slumber.utils;
 
 import java.io.IOException;
 import java.io.InputStream;

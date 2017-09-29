@@ -1,12 +1,15 @@
+/*
+ * Copyright (c) 2017. The Test Guys
+ */
+
 package com.thetestguys.slumber.web;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.Table;
 import com.paulhammant.ngwebdriver.ByAngular;
 import com.thetestguys.slumber.pojo.ObjectsPojo;
-
+import org.apache.commons.io.IOCase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -38,7 +41,7 @@ public class WebObjects {
     /**
      * Simple constructor
      */
-    public WebObjects() {
+    public WebObjects() throws Exception {
         readObjectsDefinition();
     }
 
@@ -46,7 +49,7 @@ public class WebObjects {
      * Constructor
      * @param webDriver WebDriver
      */
-    public WebObjects(WebDriver webDriver) {
+    public WebObjects(WebDriver webDriver) throws Exception {
         this.webDriver = webDriver;
         readObjectsDefinition();
     }
@@ -54,17 +57,20 @@ public class WebObjects {
     /**
      * Read objects definition from JSON catalogue
      */
-    private void readObjectsDefinition() {
+    private void readObjectsDefinition() throws JsonParseException, JsonMappingException, IOException {
         ObjectsPojo objectsPojo = null;
         ObjectMapper mapper = new ObjectMapper();
         try {
             objectsPojo = mapper.readValue(readJsonToString("/objectsLibrary.json"), ObjectsPojo.class);
         } catch (JsonParseException e) {
             e.printStackTrace();
+            throw e;
         } catch (JsonMappingException e) {
             e.printStackTrace();
+            throw e;
         } catch (IOException e) {
             e.printStackTrace();
+            throw e;
         }
         ObjectsPojo.Objects[] objects = objectsPojo.getObjects();
         List<ObjectsPojo.Objects> webObjectsList = new ArrayList<ObjectsPojo.Objects>(Arrays.asList(objects));
@@ -77,7 +83,7 @@ public class WebObjects {
      * @param filePath Path to JSON file
      * @return String of JSON
      */
-    private String readJsonToString(String filePath) {
+    private String readJsonToString(String filePath) throws IOException {
         String message = "";
         InputStream in = getClass().getResourceAsStream(filePath);
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
@@ -85,6 +91,7 @@ public class WebObjects {
             message = org.apache.commons.io.IOUtils.toString(reader);
         } catch (IOException e) {
             e.printStackTrace();
+            throw e;
         }
         return message;
     }

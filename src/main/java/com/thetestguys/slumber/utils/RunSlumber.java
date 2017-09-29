@@ -1,7 +1,12 @@
+/*
+ * Copyright (c) 2017. The Test Guys
+ */
+
 package com.thetestguys.slumber.utils;
 
 import org.testng.TestNG;
 import org.testng.xml.XmlClass;
+import org.testng.xml.XmlPackage;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
 import java.util.ArrayList;
@@ -34,11 +39,12 @@ public class RunSlumber {
         testNGSuite.setName("Automation Suite");
         testNGSuite.setParallel(XmlSuite.ParallelMode.TRUE);
         testNGSuite.setThreadCount(5);
-        XmlTest testNGTest = new XmlTest();
+        XmlTest testNGTest = new XmlTest(testNGSuite);
         testNGTest.setName("Automation Test");
-        List<XmlClass> testNGClass = new ArrayList<XmlClass>();
-        testNGClass.add(new XmlClass("id.alphait.automation.slumber.utils.FeatureRunner"));
-        testNGTest.setXmlClasses(testNGClass);
+        testNGTest.setVerbose(1);
+        List<XmlPackage> testNGPackages = new ArrayList<XmlPackage>();
+        testNGPackages.add(new XmlPackage("com.thetestguys.slumber.runners.*"));
+        testNGTest.setXmlPackages(testNGPackages);
         List<XmlTest> testNGTests = new ArrayList<XmlTest>();
         testNGTests.add(testNGTest);
         testNGSuite.setTests(testNGTests);

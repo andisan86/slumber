@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suite name="Test Suite" parallel="false">
-	<test name="Test">
-		<packages>
-      		<package name="id.alphait.automation.slumber.runners" />
-   		</packages>
-	</test>
-</suite>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<!-- This is just an example -->
+<suite name="Automation Suite" parallel="true">
+	<test name="Automation Test">
+		<classes>
+			<class name="com.thetestguys.slumber.runners.FeatureRunner"/>
+		</classes>
+	</test> <!-- Automation Test -->
+</suite> <!-- Automation Suite -->

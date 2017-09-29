@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2017. The Test Guys
+ */
+
 package com.thetestguys.slumber.reporting;
 
 import java.io.File;
@@ -9,7 +13,6 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
-
 import com.thetestguys.slumber.utils.PropertyFactory;
 
 /**
@@ -21,10 +24,10 @@ import com.thetestguys.slumber.utils.PropertyFactory;
 public class LogConsole {
 	private final Logger LOGGER = LogManager.getLogger(LogConsole.class.getName());
 	private Path logDirPath;
-	PropertyFactory properties = new PropertyFactory();
-	final Level ASSERT_FAIL = Level.forName("ASSERT_FAIL", 150);
-	final Level ASSERT_PASS = Level.forName("ASSERT_PASS", 350);
-	final Level STEP = Level.forName("STEP", 450);
+	private PropertyFactory properties = new PropertyFactory();
+	private final Level ASSERT_FAIL = Level.forName("ASSERT_FAIL", 150);
+	private final Level ASSERT_PASS = Level.forName("ASSERT_PASS", 350);
+	private final Level STEP = Level.forName("STEP", 450);
 	
 	/**
 	 * Constructor.

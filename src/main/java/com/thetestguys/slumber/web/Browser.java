@@ -1,9 +1,12 @@
+/*
+ * Copyright (c) 2017. The Test Guys
+ */
+
 package com.thetestguys.slumber.web;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 
-import com.thetestguys.slumber.reporting.LogManager;
+import com.thetestguys.slumber.reporting.Log;
 import com.thetestguys.slumber.utils.PropertyFactory;
 
 /**
@@ -11,7 +14,7 @@ import com.thetestguys.slumber.utils.PropertyFactory;
  */
 public class Browser {
     private WebDriver webDriver;
-    private LogManager logs;
+    private Log logs;
     private String testPlatform;
     private String testBrowser;
     private PropertyFactory props = new PropertyFactory();

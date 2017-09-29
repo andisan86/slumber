@@ -1,15 +1,11 @@
+/*
+ * Copyright (c) 2017. The Test Guys
+ */
+
 package com.thetestguys.slumber.reporting;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import com.cucumber.listener.Reporter;
-import com.thetestguys.slumber.utils.PropertyFactory;
-import com.aventstack.extentreports.MediaEntityBuilder;
-import com.aventstack.extentreports.gherkin.model.And;
-import com.aventstack.extentreports.gherkin.model.Given;
-import com.aventstack.extentreports.gherkin.model.Then;
-import com.aventstack.extentreports.gherkin.model.When;
 
 /**
  * This class describes report logging functionality
@@ -17,16 +13,14 @@ import com.aventstack.extentreports.gherkin.model.When;
  * @author Andi Santoso
  *
  */
-public class LogManager {
-	private LogConsole log;
+public class Log {
+	private LogConsole logConsole;
 	
 	/**
-	 * Constructor 
-	 *
-	 * @param test ExtentTest
+	 * Constructor
 	 */
-	public LogManager() {
-		log = new LogConsole();
+	public Log() {
+		logConsole = new LogConsole();
 	}
 	
 	/**
@@ -37,8 +31,8 @@ public class LogManager {
 	 */
 	public synchronized void logStepDef(String gherkinKeyword, String item) {
 		Reporter.addStepLog(item);
-		log.logStep(item);
-		log.logDebug(item);
+		logConsole.logStep(item);
+		logConsole.logDebug(item);
 	}
 	
 	/**
@@ -47,7 +41,7 @@ public class LogManager {
 	 * @param item item
 	 */
 	public synchronized void logDebug(String item) {
-		log.logDebug(item);
+		logConsole.logDebug(item);
 	}
 	
 	/**
@@ -57,8 +51,8 @@ public class LogManager {
 	 */
 	public synchronized void logPassAssertion(String item) {
 		Reporter.addStepLog(item);
-		log.logAssertPass(item);
-		log.logDebug(item);
+		logConsole.logAssertPass(item);
+		logConsole.logDebug(item);
 	}
 	
 	/**
@@ -68,7 +62,7 @@ public class LogManager {
 	 */
 	public synchronized void logWarning(String item) {
 		Reporter.addStepLog(item);
-		log.logWarning(item);
+		logConsole.logWarning(item);
 	}
 	
 	/**
@@ -78,7 +72,7 @@ public class LogManager {
 	 */
 	public synchronized void logInfo(String item) {
 		Reporter.addStepLog(item);
-		log.logDebug(item);
+		logConsole.logDebug(item);
 	}
 	
 	/**
@@ -94,7 +88,7 @@ public class LogManager {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		log.logAssertFail(item);
-		log.logDebug(item);
+		logConsole.logAssertFail(item);
+		logConsole.logDebug(item);
 	}
 }

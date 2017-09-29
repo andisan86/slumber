@@ -1,21 +1,24 @@
+/*
+ * Copyright (c) 2017. The Test Guys
+ */
+
 package com.thetestguys.slumber.runners;
 
+import com.cucumber.listener.Reporter;
+import com.thetestguys.slumber.utils.PropertyFactory;
 import cucumber.api.CucumberOptions;
-import cucumber.api.testng.CucumberFeatureWrapper;
-import cucumber.api.testng.TestNGCucumberRunner;
-
+import cucumber.api.testng.AbstractTestNGCucumberTests;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.commons.io.IOUtils;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import com.cucumber.listener.ExtentProperties;
 import com.thetestguys.slumber.config.InitDriver;
-import com.thetestguys.slumber.reporting.LogManager;
+import com.thetestguys.slumber.reporting.Log;
 import com.thetestguys.slumber.web.Actions;
 import com.thetestguys.slumber.web.WebObjects;
 
@@ -26,93 +29,71 @@ import com.thetestguys.slumber.web.WebObjects;
  *
  */
 @CucumberOptions(
-        features = "src/test/resources/features"
-        , glue = "id.alphait.automation.slumber.glue"
-        , plugin = {"com.cucumber.listener.ExtentCucumberFormatter:"}
+        features = "features"
+        , glue = "com.thetestguys.slumber.glue"
+        , plugin = {"json:output/runResult.json", "com.cucumber.listener.ExtentCucumberFormatter:"}
 )
-public class FeatureRunner {
-	private TestNGCucumberRunner testNGCucumberRunner;
-	private static String keyID;
-	private static Map<String, Object> paramsMap;
-    private WebObjects webObjects;
-    private InitDriver initDriver;
-    private WebDriver webDriver;
-    private Actions actions;
-    private LogManager log;
+public class FeatureRunner extends AbstractTestNGCucumberTests {
+    private static PropertyFactory properties = new PropertyFactory();
+    private static Map<String, Object> paramsMap;
+    private static String keyID;
+    private static WebObjects webObjects;
+    private static InitDriver initDriver;
+    private static WebDriver webDriver;
+    private static Actions actions;
+    private static Log log;
 
-    public FeatureRunner() {
-    	
-    }
-	
-	/**
-	 * Initiates reporting, actions, driver and web object
-	 */
-	@BeforeSuite
-	public void beforeSuite() {
-		//System.setProperty("mode", "prod");
-		initDriver = new InitDriver();
+    /**
+     * Setup method to be executed before beginning of run
+     */
+    @BeforeClass
+    public void setup() throws Exception {
+        initDriver = new InitDriver();
         webDriver = initDriver.getDriver();
         webObjects = new WebObjects(webDriver);
         actions = new Actions(webDriver, webObjects);
-		ExtentProperties extentProperties = ExtentProperties.INSTANCE;
-        extentProperties.setReportPath("./report.html");
-	}
-	
-	/**
-	 * Get thread ID as map key
-	 */
-	@BeforeClass
-	public void beforeClass() {
-		keyID = Long.toString(Thread.currentThread().getId());
-		log = new LogManager();
-		paramsMap = new HashMap<String, Object>();
-		paramsMap.put(keyID + "Actions", actions);
-		paramsMap.put(keyID + "Driver", webDriver);
-		paramsMap.put(keyID + "Log", log);
-	}
-
-	/**
-	 * Runs the test
-	 * 
-	 * @param cucumberFeatureWrapper cucumberFeatureWrapper
-	 */
-    @Test(groups = "cucumber", description = "Runs Cucumber Feature", dataProvider = "features")
-    public void feature(CucumberFeatureWrapper cucumberFeatureWrapper) {
-        testNGCucumberRunner.runCucumber(cucumberFeatureWrapper.getCucumberFeature());
+        ExtentProperties extentProperties = ExtentProperties.INSTANCE;
+//        extentProperties.setExtentXServerUrl("http://localhost:1337");
+//        extentProperties.setProjectName("TestNGProject");
+        extentProperties.setReportPath(properties.getValueString("setting.extentReport.report.name"));
+        keyID = Long.toString(Thread.currentThread().getId());
+        log = new Log();
+        paramsMap = new HashMap<String, Object>();
+        paramsMap.put(keyID + "Actions", actions);
+        paramsMap.put(keyID + "Driver", webDriver);
+        paramsMap.put(keyID + "Log", log);
     }
 
     /**
-     * Finish the test
+     * Teardown method which is executed after run
      */
-    @AfterTest
-    public void afterTest() {
-        testNGCucumberRunner.finish();
+    @AfterClass
+    public void teardown() {
+        InputStream in = getClass().getResourceAsStream(properties.getValueString("setting.extentReport.config"));
+        try {
+            File tempFile = File.createTempFile("extent-config", ".xml");
+            tempFile.deleteOnExit();
+            FileOutputStream out = new FileOutputStream(tempFile);
+            IOUtils.copy(in, out);
+            Reporter.loadXMLConfig(tempFile);
+        } catch (Exception e) {
+
+        }
     }
 
-    /**
-     * Get bunch of features as TestNG's DataProvider
-     * 
-     * @return features
-     */
-    @DataProvider
-    public Object[][] features() {
-        return testNGCucumberRunner.provideFeatures();
+    public PropertyFactory getProperties() {
+        return properties;
     }
 
-    /**
-     * Create Cucumber runner of this class
-     */
-    @BeforeTest
-    public void setup() {
-        testNGCucumberRunner = new TestNGCucumberRunner(this.getClass());
+    public void setProperties(PropertyFactory properties) {
+        FeatureRunner.properties = properties;
     }
-
     /**
      * Getter map of parameters created by this runner
-     * 
+     *
      * @return paramsMap
      */
-	public Map<String, Object> getParamsMap() {
-		return paramsMap;
-	}
+    public Map<String, Object> getParamsMap() {
+        return paramsMap;
+    }
 }

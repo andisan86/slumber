@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2017. The Test Guys
+ */
+
 package com.thetestguys.slumber.web;
 
 import org.openqa.selenium.WebDriver;

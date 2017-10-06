@@ -9,8 +9,6 @@ import com.thetestguys.slumber.pojo.WebObject;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import java.io.*;
 import java.util.*;
 
@@ -19,22 +17,11 @@ import java.util.*;
  */
 public class WebObjects {
     private static Map<String, WebObject> mapWebObjects;
-    private WebDriver webDriver;
 
     /**
      * Simple constructor
      */
     public WebObjects() throws Exception {
-        mapWebObjects = new HashMap<String, WebObject>();
-        readObjectsDefinition();
-    }
-
-    /**
-     * Constructor
-     * @param webDriver WebDriver
-     */
-    public WebObjects(WebDriver webDriver) throws Exception {
-        this.webDriver = webDriver;
         mapWebObjects = new HashMap<String, WebObject>();
         readObjectsDefinition();
     }
@@ -86,8 +73,4 @@ public class WebObjects {
      * @return web object
      */
     public WebObject getWebObject(String webObjectName) { return mapWebObjects.get(webObjectName); }
-
-    public WebElement getWebElement(String webObjectName) {
-
-    }
 }

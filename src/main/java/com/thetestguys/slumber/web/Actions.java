@@ -4,6 +4,9 @@
 
 package com.thetestguys.slumber.web;
 
+import com.paulhammant.ngwebdriver.ByAngular;
+import com.thetestguys.slumber.pojo.WebObject;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -47,6 +50,23 @@ public class Actions {
      * @return WebElement of object
      */
     private WebElement getWebElementFromObjectName(String objectName) {
-        return webObjects.getWebObject(objectName);
+        WebObject webObject = webObjects.getWebObject(objectName);
+        WebElement element = null;
+        if (!webObject.getObjectId().isEmpty()) {
+            element = webDriver.findElement(By.id(webObject.getObjectId()));
+        } else if (!webObject.getObjectNameAttr().isEmpty()) {
+            element = webDriver.findElement(By.name(webObject.getObjectNameAttr()));
+        } else if (!webObject.getObjectNgModel().isEmpty()) {
+            element = webDriver.findElement(ByAngular.model(webObject.getObjectNgModel()));
+        } else if (!webObject.getObjectNgClick().isEmpty()) {
+            element = webDriver.findElement(By.xpath("//" + webObject.getObjectType() + "[contains(@ng-click, '" + webObject.getObjectNgClick() + "')]"));
+        } else if (!webObject.getObjectNgIf().isEmpty()) {
+            element = webDriver.findElement(By.xpath("//" + webObject.getObjectType() + "[contains(@ng-if, '" + webObject.getObjectNgIf() + "')]"));
+        } else if (!webObject.getObjectHref().isEmpty()) {
+            element = webDriver.findElement(By.xpath("//" + webObject.getObjectType() + "[contains(@href, '" + webObject.getObjectHref() + "')]"));
+        } else {    // raw xpath form
+            element = webDriver.findElement(By.xpath(objectName));
+        }
+        return element;
     }
 }

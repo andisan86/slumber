@@ -50,7 +50,7 @@ public class FeatureRunner extends AbstractTestNGCucumberTests {
     public void setup() throws Exception {
         initDriver = new InitDriver();
         webDriver = initDriver.getDriver();
-        webObjects = new WebObjects(webDriver);
+        webObjects = new WebObjects();
         actions = new Actions(webDriver, webObjects);
         ExtentProperties extentProperties = ExtentProperties.INSTANCE;
 //        extentProperties.setExtentXServerUrl("http://localhost:1337");
